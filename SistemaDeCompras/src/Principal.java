@@ -11,10 +11,12 @@ public class Principal {
         Cliente clienteAtual;
         int option;
         while (rodandoLogin) {
+            
             menuLoginOuCadastro();
             option = scanner.nextInt();
             scanner.nextLine();
             clienteAtual=processEntrar(option,lista_clientes,estoque,scanner);
+            System.out.println("DEBUG main: clienteAtual = " + clienteAtual);
             if (clienteAtual == null) {
                 continue;
             }
@@ -22,6 +24,7 @@ public class Principal {
                 rodandoLogin = false;
                 continue;
             }
+            rodandoPrograma=true;
             while (rodandoPrograma) {
                 if(clienteAtual.isAdmin() == false){
                     menuProgramaCliente();
@@ -77,10 +80,10 @@ public class Principal {
                 if(lista_clientes.atenticaConta(nome, senha) == false){
                     System.out.println("login inválido");
                     return null;
-                }
-                return lista_clientes.getCliente(nome);
+                }else{
+                    return lista_clientes.getCliente(nome);}
             case 2:
-                System.out.println("===== LOGIN =====");
+                System.out.println("===== CADASTRO =====");
                 System.out.print("Nome de usuário: ");
                 nome = scanner.nextLine();
                 System.out.print("Senha: ");
@@ -88,6 +91,8 @@ public class Principal {
                 newCliente = new Cliente(nome, senha, estoque);
                 lista_clientes.addCliente(newCliente);
                 System.out.println("Bem Vindo, " + newCliente.getNome());
+                System.out.println("DEBUG processarEntrar: lista_clientes.getCliente(\"" + nome + "\") = " + lista_clientes.getCliente(nome));
+                lista_clientes.printClientes();
                 return lista_clientes.getCliente(nome);
             case 3:
                 System.out.println("===== LOGIN COMO ADMIN =====");
@@ -99,10 +104,10 @@ public class Principal {
                 if (newCliente.isAdmin() == false){
                     System.out.println("login inválido");
                     return null;
-                }
+                }else{
                 lista_clientes.addCliente(newCliente);
                 System.out.println("Bem Vindo, " + newCliente.getNome());
-                return lista_clientes.getCliente(nome);
+                return lista_clientes.getCliente(nome);}
             case 4:
                 System.out.println("Encerrando programa...");
                 newCliente = new Cliente("sair", "000'", estoque);
