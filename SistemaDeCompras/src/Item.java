@@ -13,4 +13,8 @@ public class Item {
     public void removerItem(int quantidade){
         this.qtd -= quantidade;
     }
+    public void aumentarQuantidade(int quantidade){
+        this.qtd +=quantidade;
+    }
+
 }

@@ -9,13 +9,13 @@ public class Cliente extends User {
             this.isAdmin=false;
         }
     }
-    public void finalizaCompra(){
-        carrinho.finalizaCompra();
+    public boolean finalizaCompra(){
+        return carrinho.finalizaCompra();
     }
     public boolean adicionaItem(Item i){
         return carrinho.adicionaItem(i);
     }
-    public int calculaTotal(){
+    public double calculaTotal(){
         return carrinho.calculaTotal();
     }
     public int removeItem(String s,int quantidade){

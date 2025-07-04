@@ -16,7 +16,6 @@ public class Principal {
             option = scanner.nextInt();
             scanner.nextLine();
             clienteAtual=processEntrar(option,lista_clientes,estoque,scanner);
-            System.out.println("DEBUG main: clienteAtual = " + clienteAtual);
             if (clienteAtual == null) {
                 continue;
             }
@@ -91,8 +90,6 @@ public class Principal {
                 newCliente = new Cliente(nome, senha, estoque);
                 lista_clientes.addCliente(newCliente);
                 System.out.println("Bem Vindo, " + newCliente.getNome());
-                System.out.println("DEBUG processarEntrar: lista_clientes.getCliente(\"" + nome + "\") = " + lista_clientes.getCliente(nome));
-                lista_clientes.printClientes();
                 return lista_clientes.getCliente(nome);
             case 3:
                 System.out.println("===== LOGIN COMO ADMIN =====");
@@ -177,8 +174,12 @@ public class Principal {
                 cliente.listarItensDoCarrinho();
                 return 1;
             case 5:
-                cliente.finalizaCompra();
-                return -1;
+                if(cliente.finalizaCompra() == false){
+                    System.out.println("Não foi possivel finalizar as compras.");
+                    return 0;
+                }else{
+                    return -1;
+                }
             case 6:
                 return -1;
                 
@@ -196,9 +197,10 @@ public class Principal {
         System.out.println("4 - SAIR");
     }
     // retorna -1 para sair de loop, 0 para erros e 1 para sucesso
-    public static int processaOptionsAdmin(int option,Cliente cliente, EstoqueProdutos estoqueProdutos,Scanner scanner){String nome;
+    public static int processaOptionsAdmin(int option,Cliente cliente, EstoqueProdutos estoqueProdutos,Scanner scanner){
+        String nome;
         int quantidade;
-        int price;
+        double price;
         switch (option) {
             case 1:
                 System.out.println("digite o nome do item que deseja adicionar: ");
@@ -206,11 +208,15 @@ public class Principal {
                 System.out.println("digite a quantidade que deseja adicionar: ");
                 quantidade = scanner.nextInt();
                 scanner.nextLine();
+                if(estoqueProdutos.procurarItem(nome) != null){
+                    estoqueProdutos.adicionaProduto(new ProdutoEstoque(nome,0,quantidade));
+                    return 1;
+                }else{
                 System.out.println("digite o preço do produto: ");
-                price = scanner.nextInt();
+                price = scanner.nextDouble();
                 scanner.nextLine();
                 estoqueProdutos.adicionaProduto(new ProdutoEstoque(nome,price,quantidade));
-                return 1;
+                return 1;}
             case 2:
                 System.out.println("digite o nome do item que deseja remover: ");
                 nome = scanner.nextLine();

@@ -6,27 +6,34 @@ public class EstoqueProdutos {
     public EstoqueProdutos(){
         produtosEmEstoque = new ArrayList<ProdutoEstoque>();
     }
-    public void adicionaProduto(ProdutoEstoque pe){
+    public boolean adicionaProduto(ProdutoEstoque pe){ 
+        for (ProdutoEstoque produtoEstoque : produtosEmEstoque) {
+            if (produtoEstoque.getNome().equals(pe.getNome())) {
+                produtoEstoque.aumentarQuantidade(pe.getQuantidade());
+                return false;
+            }
+        }
         produtosEmEstoque.add(pe);
+        return true;
     }
     //-1 :erro,0:remoção completa, 1: remoção parcial
     public int removerProduto(String nome,int quantidade){
         ProdutoEstoque auxProduto = this.procurarItem(nome);
         if(auxProduto == null){
-            System.out.println("Item " + nome + " não encontrado no carrinho.");
+            System.out.println("Item " + nome + " não encontrado.");
             return -1;
         }
         if(auxProduto.getQuantidade() < quantidade){
-            System.out.println("não é possivel tirar "+quantidade+" "+ nome + "(s) do carrinho, pois só existem" + auxProduto.getQuantidade()+ "");
+            System.out.println("não é possivel tirar "+quantidade+" "+ nome + "(s), pois só existem" + auxProduto.getQuantidade()+ "");
             return -1;
         }
         if(auxProduto.getQuantidade() == quantidade){
             produtosEmEstoque.remove(auxProduto);
-            System.out.println("Item " + nome + " removido completamente do carrinho.");
+            System.out.println("Item " + nome + " removido completamente.");
             return 0;
         }else{
             auxProduto.tirarDeEstoque(quantidade);
-            System.out.println("Foram removidos " + quantidade + " do item " + nome + " do carrinho.");
+            System.out.println("Foram removidos " + quantidade + " do item " + nome + ".");
             return 1;
         }
 

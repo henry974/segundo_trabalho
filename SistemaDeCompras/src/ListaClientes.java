@@ -52,10 +52,6 @@ public class ListaClientes {
         System.out.println("nome nao encontrado");
         return null;
     }
-    public void printClientes() {
-    System.out.println("=== Lista de clientes ===");
-    for (Cliente cliente : this.listaClientes) {
-        System.out.println(cliente.getNome() + " - " + cliente.getSenha());
-    }
+    
 }
-}
+

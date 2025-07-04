@@ -10,6 +10,11 @@ public class CarrinhoCompra {
     }
     public boolean adicionaItem(Item i){
         ProdutoEstoque auxProduto = this.estoqueDisponivel.procurarItem(i.getNome());
+        Item auxItem=this.procuraItemNoCarrinho(i.getNome());
+        if(auxItem != null){
+            auxItem.aumentarQuantidade(i.getQuantidade());
+            return true;
+        }
         if(i.getQuantidade() <= auxProduto.getQuantidade()){
             this.interiorCarrinho.add(i);
             return true;
@@ -19,18 +24,21 @@ public class CarrinhoCompra {
         }
     }
 
-    public void finalizaCompra(){
+    public boolean finalizaCompra(){
         for (Item item : interiorCarrinho) {
             ProdutoEstoque auxProduto = estoqueDisponivel.procurarItem(item.getNome());
             if (auxProduto != null && auxProduto.getQuantidade() >= item.getQuantidade()) {
-                auxProduto.tirarDeEstoque(item.getQuantidade());  
+                estoqueDisponivel.removerProduto(item.getNome(),item.getQuantidade());  
             }else{
                 System.out.println("Quantidade insuficiente do produto " + item.getNome());
+                System.out.println("Quantidade em estoque: "+auxProduto.getQuantidade()+" Quantidade no carrinho: "+item.getQuantidade());
+                return false;
             }
         }
+        return true;
     }
-    public int calculaTotal(){
-        int somador=0;
+    public double calculaTotal(){
+        double somador=0;
         for (Item item : this.interiorCarrinho) {
             ProdutoEstoque auxProduto = this.estoqueDisponivel.procurarItem(item.getNome());
             somador = somador + (item.getQuantidade() * auxProduto.getPrice());
