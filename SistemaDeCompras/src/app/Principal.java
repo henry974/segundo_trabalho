@@ -1,3 +1,13 @@
+package app;
+
+import java.util.Scanner;
+import model.Cliente;
+import model.Item;
+import model.ProdutoEstoque;
+import service.EstoqueProdutos;
+import model.CarrinhoCompra;
+import service.ListaClientes;
+
 import java.util.Scanner;
 
 
