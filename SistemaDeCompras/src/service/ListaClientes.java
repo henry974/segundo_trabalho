@@ -1,4 +1,7 @@
+package service;
 import java.util.ArrayList;
+
+import model.Cliente;
 
 public class ListaClientes {
     private ArrayList<Cliente> listaClientes;

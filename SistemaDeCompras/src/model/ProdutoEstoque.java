@@ -1,3 +1,4 @@
+package model;
 public class ProdutoEstoque {
     private String productName;
     private double price;

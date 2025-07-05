@@ -1,3 +1,6 @@
+package model;
+import service.EstoqueProdutos;
+
 public class Cliente extends User {
     private CarrinhoCompra carrinho;
     private boolean isAdmin;

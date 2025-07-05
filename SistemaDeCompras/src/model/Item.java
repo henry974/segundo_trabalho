@@ -1,3 +1,4 @@
+package model;
 public class Item {
     private String nomeProduto;
     private int qtd;

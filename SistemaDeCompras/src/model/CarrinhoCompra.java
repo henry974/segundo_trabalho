@@ -1,4 +1,7 @@
+package model;
 import java.util.ArrayList;
+
+import service.EstoqueProdutos;
 
 public class CarrinhoCompra {
     private ArrayList<Item> interiorCarrinho;
